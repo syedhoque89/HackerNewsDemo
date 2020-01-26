@@ -18,7 +18,7 @@ namespace HackerNewsDemo.Services
         {
             var stories = new HashSet<News>();
 
-            // thanks to c# 8.0 feature
+            // thanks to this c# 8.0 feature
             // https://docs.microsoft.com/en-us/archive/msdn-magazine/2019/november/csharp-iterating-with-async-enumerables-in-csharp-8
             await foreach (var hackerNewsDto in GetHackerNewsDataAsyncEnumerable())
             {
@@ -105,7 +105,7 @@ namespace HackerNewsDemo.Services
                 return false;
             }
 
-            // exclude posts that have 0 comments (kids are id's for comments, therefore, 0 kids = 0 comments)
+            // exclude posts that have 0 comments (Kids are id's for comments, therefore, 0 kids = 0 comments)
             // kids these days huh?
             return !(news.Kids is null) && news.Kids.Any();
         }

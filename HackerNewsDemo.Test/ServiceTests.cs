@@ -53,5 +53,29 @@ namespace HackerNewsDemo.Test
 
             Assert.LessOrEqual(stories.Count(), limitTo);
         }
+
+        [TestCase(5)]
+        [TestCase(100)]
+        public async Task TopStoriesService_Should_Not_Return_Invalid_Data(int limitTo)
+        {
+            var storiesIds = await _topStoriesIdService.GetAsync();
+
+            var stories = await new TopStoriesService().GetAsync(storiesIds, limitTo);
+
+            var invalidDataEmptyTitle = stories.FirstOrDefault(s => string.IsNullOrEmpty(s.Title));
+            var invalidDataEmptyAuthor = stories.FirstOrDefault(s => string.IsNullOrEmpty(s.Author));
+            var invalidDataEmptyUri = stories.FirstOrDefault(s => s.Uri == null);
+            var invalidDataNoComments = stories.FirstOrDefault(s => s.Comments < 0);
+            var invalidDataNoRanks = stories.FirstOrDefault(s => s.Rank < 1);
+            var invalidDataNoPoints = stories.FirstOrDefault(s => s.Points < 0);
+
+            // assert there is no invalid data in the collection returned ¯\_(ツ)_/¯
+            Assert.IsNull(invalidDataEmptyTitle);
+            Assert.IsNull(invalidDataEmptyAuthor);
+            Assert.IsNull(invalidDataEmptyUri);
+            Assert.IsNull(invalidDataNoComments);
+            Assert.IsNull(invalidDataNoRanks);
+            Assert.IsNull(invalidDataNoPoints);
+        }
     }
 }
