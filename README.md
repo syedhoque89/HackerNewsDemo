@@ -8,3 +8,6 @@ Please ensure you have:
  - run on Visual Studio 2019 16.4.3 or higher
  
  Build and run
+ 
+ ![Screenshot](HackerNews_SwaggerUI.png)
+ 
